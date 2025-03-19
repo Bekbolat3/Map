@@ -1,0 +1,36 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+#map {
+  margin: 20px auto;
+  border: 1px solid #ccc;
+  width: 600px;
+  height: 400px;
+  position: relative;
+}
+
+.country {
+  cursor: pointer;
+  stroke: #000;
+  stroke-width: 1;
+  transition: fill 0.3s;
+}
+
+#country-list {
+  margin-top: 20px;
+}
+
+#country-list span {
+  margin: 0 10px;
+  font-size: 18px;
+  padding: 5px;
+}
+
+#country-list .selected {
+  font-weight: bold;
+  text-decoration: underline;
+}
