@@ -1,15 +1,26 @@
-<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Карта Азии</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+  <title>Угадай страну Азии</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="map"></div>
+  <h1>Угадай страну в Азии</h1>
+  <div id="map-container">
+    <svg id="asia-map" viewBox="0 0 1000 700">
+      <path id="Russia" class="country" 
+            d="M 200,50 L 800,50 L 800,200 L 600,220 L 400,180 L 200,200 Z" />
+      <path id="China" class="country" 
+            d="M 400,300 L 600,280 L 650,360 L 550,420 L 450,380 Z" />
+      <path id="India" class="country" 
+            d="M 350,450 L 450,430 L 500,480 L 480,540 L 400,520 Z" />
+      <path id="Japan" class="country" 
+            d="M 750,250 L 760,280 L 770,320 L 760,340 L 750,320 Z" />
+      <path id="Kazakhstan" class="country"
+            d="M 300,220 L 400,220 L 450,260 L 440,290 L 310,280 Z" />
+    </svg>
+  </div>
   <div id="country-list"></div>
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
