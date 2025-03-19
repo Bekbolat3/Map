@@ -1,81 +1,39 @@
-var map = L.map('map').setView([34, 100], 4);
+var targetCountries = ["Russia", "China", "India", "Japan", "Kazakhstan"];
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; OpenStreetMap contributors'
-}).addTo(map);
+var currentIndex = 0;
 
-var targetCountries = ["China", "India", "Japan"];
-var currentCountryIndex = 0;
-
-var asiaGeojson = {
-  "type": "FeatureCollection",
-  "features": [
-    {
-      "type": "Feature",
-      "properties": { "name": "China" },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [[[73,18],[135,18],[135,53],[73,53],[73,18]]]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": { "name": "India" },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [[[68,6],[97,6],[97,36],[68,36],[68,6]]]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": { "name": "Japan" },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [[[129,31],[146,31],[146,46],[129,46],[129,31]]]
-      }
-    }
-  ]
-};
-
-function style(feature) {
-  return {
-    fillColor: '#ddd',
-    weight: 2,
-    opacity: 1,
-    color: 'white',
-    dashArray: '3',
-    fillOpacity: 0.7
-  };
-}
-
-function onEachFeature(feature, layer) {
-  layer.on('click', function() {
-    if (currentCountryIndex >= targetCountries.length) return;
-    var clickedCountry = feature.properties.name;
-    var targetCountry = targetCountries[currentCountryIndex];
-    if (clickedCountry === targetCountry) {
-      layer.setStyle({ fillColor: 'green' });
-    } else {
-      layer.setStyle({ fillColor: 'red' });
-    }
-    currentCountryIndex++;
-    updateCountryList();
-  });
-  layer.bindPopup(feature.properties.name);
-}
-
-function updateCountryList() {
+function highlightNextCountry() {
+  var container = document.getElementById("country-list");
   var html = "";
   for (var i = 0; i < targetCountries.length; i++) {
-    if (i === currentCountryIndex) {
+    if (i === currentIndex) {
       html += '<span class="selected">' + targetCountries[i] + '</span>';
     } else {
       html += '<span>' + targetCountries[i] + '</span>';
     }
   }
-  document.getElementById('country-list').innerHTML = html;
+  container.innerHTML = html;
 }
 
-updateCountryList();
+function handleCountryClick(e) {
+  if (currentIndex >= targetCountries.length) return;
+  var clickedId = e.target.id;
+  var correctId = targetCountries[currentIndex];
+  if (clickedId === correctId) {
+    e.target.style.fill = "green";
+  } else {
+    e.target.style.fill = "red";
+  }
+  currentIndex++;
+  highlightNextCountry();
+}
 
-L.geoJSON(asiaGeojson, { style: style, onEachFeature: onEachFeature }).addTo(map);
+function init() {
+  highlightNextCountry();
+  var countries = document.querySelectorAll(".country");
+  countries.forEach(function(path) {
+    path.addEventListener("click", handleCountryClick);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", init);
